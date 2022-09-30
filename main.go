@@ -1,14 +1,13 @@
 package main
 
 import (
-	"CherryPatch/internal/filesystem"
-	"fmt"
+	"log"
+	"os"
 )
 
 func main() {
-	// create $HOME/.cherrypatch
-	if cherry_root_dir := filesystem.GetCherryRootDir(); !filesystem.CheckExists(cherry_root_dir) {
-		filesystem.InitCherryRoot()
-		fmt.Println("Cherry Patch Root initialised")
+	app := InitCommands()
+	if err := app.Run(os.Args); err != nil {
+		log.Fatal(err)
 	}
 }
