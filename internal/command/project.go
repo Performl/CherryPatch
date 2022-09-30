@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	"CherryPatch/internal/project"
 
 	"github.com/urfave/cli/v2"
 )
@@ -17,7 +17,6 @@ func (c *ProjectCommand) GetUsage() string {
 }
 
 func (c *ProjectCommand) Run(ctx *cli.Context) error {
-	// return filesystem.CherryInitIfNotExist()
-	fmt.Println(ctx.Args().Get(0))
-	return nil
+	projectName := ctx.Args().First()
+	return project.CreateProject(projectName)
 }

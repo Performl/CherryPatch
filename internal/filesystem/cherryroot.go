@@ -8,14 +8,14 @@ import (
 
 func CherryInitIfNotExist() error {
 	// create $HOME/.cherrypatch
-	if cherry_root_dir := getCherryRootDir(); !CheckExists(cherry_root_dir) {
+	if !CherryRootInitialized() {
 		initCherryRoot()
 		fmt.Println("Cherry Patch Root initialised")
 	}
 	return nil
 }
 
-func getCherryRootDir() string {
+func GetCherryRootDir() string {
 	usr_home, err := os.UserHomeDir()
 	if err != nil {
 		log.Fatal(err)
@@ -23,10 +23,11 @@ func getCherryRootDir() string {
 	return fmt.Sprintf("%s/.cherrypatch", usr_home)
 }
 
-// initialises cherry root in $HOME
+func CherryRootInitialized() bool {
+	return CheckExists(GetCherryRootDir())
+}
+
+// initialises cherry root in $HOME/.cherrypatch
 func initCherryRoot() {
-	cherry_root_dir := getCherryRootDir()
-	if err := os.Mkdir(cherry_root_dir, os.ModePerm); err != nil {
-		log.Fatal(err)
-	}
+	CreateDir(GetCherryRootDir())
 }
