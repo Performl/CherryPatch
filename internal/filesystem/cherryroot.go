@@ -6,12 +6,13 @@ import (
 	"os"
 )
 
-func CherryInitIfNotExist() {
+func CherryInitIfNotExist() error {
 	// create $HOME/.cherrypatch
 	if cherry_root_dir := getCherryRootDir(); !CheckExists(cherry_root_dir) {
 		initCherryRoot()
 		fmt.Println("Cherry Patch Root initialised")
 	}
+	return nil
 }
 
 func getCherryRootDir() string {
